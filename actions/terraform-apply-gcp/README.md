@@ -25,7 +25,7 @@ Here are the inputs the workflow requires:
 ```
 steps:
   - name: Run Terraform Apply
-    uses: c0x12c/gh-actions-terraform-workflows/actions/terraform-apply-gcp@v2
+    uses: LMNTL-AI/gh-actions-terraform-workflows/actions/terraform-apply-gcp@<full-commit-SHA>  # always pin to a full SHA
     with:
       gcp_project_id: 'my-project-id'
       gcp_service_account: 'my-service-account'
