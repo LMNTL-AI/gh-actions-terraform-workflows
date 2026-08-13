@@ -67,7 +67,7 @@ runs:
 
     - name: Decrypt Secrets
       if: ${{ inputs.secret_filter != '' }}
-      uses: c0x12c/gh-actions-git-secret-protector@v1
+      uses: LMNTL-AI/gh-actions-git-secret-protector@cccd2c33efc1a08008e1f69ba8227dba47b76ce0 # 1.2.4+imgpin (digest-pinned image, issue 1728)
       with:
         filter: ${{ inputs.secret_filter }}
 
@@ -85,7 +85,7 @@ runs:
 
     - name: Send a Notification to Slack on failure
       if: steps.tf_apply.outputs.exitcode == 1
-      uses: c0x12c/gh-actions-slack-notify@v0.1.2
+      uses: LMNTL-AI/gh-actions-slack-notify@8c8e6dfa3c9f4fd83648a877722da864e39d5f73 # v0.1.2 pinned to LMNTL-AI fork (issue 1728)
       with:
         webhook_url: ${{ inputs.slack_webhook_url }}
         title: ':skull: *${{ github.event.repository.name }} - Terraform applied FAILED in ${{ inputs.environment }}*'
@@ -99,7 +99,7 @@ runs:
         fi
 
     - name: Send Notification to Slack
-      uses: c0x12c/gh-actions-slack-notify@v0.1.2
+      uses: LMNTL-AI/gh-actions-slack-notify@8c8e6dfa3c9f4fd83648a877722da864e39d5f73 # v0.1.2 pinned to LMNTL-AI fork (issue 1728)
       with:
         webhook_url: ${{ inputs.slack_webhook_url }}
         title: ':rocket: *${{ github.event.repository.name }} - Applied Terraform to ${{ inputs.environment }}*'
