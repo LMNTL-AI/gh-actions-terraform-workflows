@@ -67,7 +67,7 @@ runs:
 
     - name: Decrypt Secrets
       if: ${{ inputs.secret_filter != '' }}
-      uses: LMNTL-AI/gh-actions-git-secret-protector@cccd2c33efc1a08008e1f69ba8227dba47b76ce0 # 1.2.4+imgpin (digest-pinned image, issue 1728)
+      uses: LMNTL-AI/gh-actions-git-secret-protector@6a678112964bd15f6ecd002c4deb8bb4a7f65133 # 1.2.4+lmntlimg (LMNTL ghcr mirror, issue 1728 availability leg)
       with:
         filter: ${{ inputs.secret_filter }}
 
