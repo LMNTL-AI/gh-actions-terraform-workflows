@@ -76,7 +76,7 @@ runs:
 
     - name: Decrypt Secrets
       if: ${{ inputs.secret_filter != '' }}
-      uses: c0x12c/gh-actions-git-secret-protector@v1
+      uses: LMNTL-AI/gh-actions-git-secret-protector@6a678112964bd15f6ecd002c4deb8bb4a7f65133 # 1.2.4+lmntlimg (LMNTL ghcr mirror, issue 1728 availability leg)
       with:
         filter: ${{ inputs.secret_filter }}
 
@@ -102,14 +102,14 @@ runs:
       working-directory: ${{ inputs.working_dir }}
 
     - name: Send Notification to Slack on success
-      uses: c0x12c/gh-actions-slack-notify@v0.1.3
+      uses: LMNTL-AI/gh-actions-slack-notify@305f9c143df0bf2afae090b6ca922268d50021c0 # v0.1.3 pinned to LMNTL-AI fork (issue 1728)
       if: success() && inputs.slack_webhook_url != ''
       with:
         webhook_url: ${{ inputs.slack_webhook_url }}
         title: '✅ *${{ github.event.repository.name }} - Terraform Apply SUCCESS in ${{ inputs.environment }}*'
 
     - name: Send Notification to Slack on failure
-      uses: c0x12c/gh-actions-slack-notify@v0.1.3
+      uses: LMNTL-AI/gh-actions-slack-notify@305f9c143df0bf2afae090b6ca922268d50021c0 # v0.1.3 pinned to LMNTL-AI fork (issue 1728)
       if: failure() && inputs.slack_webhook_url != ''
       with:
         webhook_url: ${{ inputs.slack_webhook_url }}

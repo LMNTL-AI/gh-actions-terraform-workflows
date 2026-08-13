@@ -26,7 +26,7 @@ Here is an example of how to use this workflow in your GitHub actions:
 ```
 steps:
   - name: Run Terraform Plan
-    uses: c0x12c/gh-actions-terraform-workflows/actions/terraform-plan-gcp@v2
+    uses: LMNTL-AI/gh-actions-terraform-workflows/actions/terraform-plan-gcp@<full-commit-SHA>  # always pin to a full SHA
     with:
       gcp_project_id: 'my-project-id'
       gcp_service_account: 'my-service-account

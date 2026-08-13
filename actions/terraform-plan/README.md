@@ -36,7 +36,7 @@ To get the old append-on-every-run behaviour instead:
 
 ```yaml
   - name: Run Terraform Plan
-    uses: c0x12c/gh-actions-terraform-workflows/actions/terraform-plan@v2
+    uses: LMNTL-AI/gh-actions-terraform-workflows/actions/terraform-plan@<full-commit-SHA>  # always pin to a full SHA
     with:
       # ...
       comment_mode: 'new'
@@ -52,7 +52,7 @@ Here is an example of how to use this workflow in your GitHub actions:
 ```
 steps:
   - name: Run Terraform Plan
-    uses: c0x12c/gh-actions-terraform-workflows/actions/terraform-plan@v2
+    uses: LMNTL-AI/gh-actions-terraform-workflows/actions/terraform-plan@<full-commit-SHA>  # always pin to a full SHA
     with:
       aws_region: 'us-east-1'
       aws_role: 'arn:aws:iam::123456789012:role/my-role'
