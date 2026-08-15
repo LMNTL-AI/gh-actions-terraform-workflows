@@ -101,9 +101,23 @@ runs:
       run: terraform apply -input=false -auto-approve -refresh=${{ inputs.refresh }} /tmp/plan.tmp
       working-directory: ${{ inputs.working_dir }}
 
+      # A notifier must never fail the job it is reporting on. On 2026-08-15 the webhook behind
+      # SLACK_WEBHOOK_URL returned 404 (deleted or revoked at the Slack end). This step ran on a
+      # SUCCESSFUL apply, threw, and failed the job -- which in web-platform's deploy-app-prod.yaml
+      # skipped both brand deploy jobs, because they `needs:` this one. A tagged release shipped
+      # nothing and the log tail read "Terraform Apply FAILED" for an apply that had already
+      # printed "Apply complete! Resources: 0 added, 0 changed, 0 destroyed".
+      #
+      # Worse, the pair interacted: this step failing made `failure()` true, so the failure
+      # notifier below ALSO fired and ALSO 404'd. One dead webhook produced two errors, and the
+      # second one impersonated a terraform failure.
+      #
+      # continue-on-error keeps the send best-effort. Announcing an outcome is not part of
+      # achieving it. Refs service-platform#1850.
     - name: Send Notification to Slack on success
       uses: LMNTL-AI/gh-actions-slack-notify@8c8e6dfa3c9f4fd83648a877722da864e39d5f73 # v0.1.2 pinned to LMNTL-AI fork (issue 1728)
       if: success() && inputs.slack_webhook_url != ''
+      continue-on-error: true
       with:
         webhook_url: ${{ inputs.slack_webhook_url }}
         title: '✅ *${{ github.event.repository.name }} - Terraform Apply SUCCESS in ${{ inputs.environment }}*'
@@ -111,6 +125,7 @@ runs:
     - name: Send Notification to Slack on failure
       uses: LMNTL-AI/gh-actions-slack-notify@8c8e6dfa3c9f4fd83648a877722da864e39d5f73 # v0.1.2 pinned to LMNTL-AI fork (issue 1728)
       if: failure() && inputs.slack_webhook_url != ''
+      continue-on-error: true
       with:
         webhook_url: ${{ inputs.slack_webhook_url }}
         title: '❌ *${{ github.event.repository.name }} - Terraform Apply FAILED in ${{ inputs.environment }}*'
